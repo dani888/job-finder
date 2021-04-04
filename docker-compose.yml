@@ -10,4 +10,4 @@ services:
             - "9229:9229"
         restart: always
         volumes:
-            - ./src:/app/src
+            - ./src:/usr/app/src
