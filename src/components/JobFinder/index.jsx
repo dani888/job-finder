@@ -1,7 +1,10 @@
 import { Component } from 'react';
 
 import { withStyles } from '@material-ui/core/styles';
-import { Button, Grid, Paper } from '@material-ui/core';
+import { Grid, Link, Fab } from '@material-ui/core';
+import { FavoriteBorder, Favorite } from '@material-ui/icons'
+import MaterialTable from 'material-table';
+import dayjs from 'dayjs';
 
 const styles = theme => ({
   root: {
@@ -9,31 +12,94 @@ const styles = theme => ({
   paper: {
       padding:10,
       "margin-top":10
+  },
+  table:{
+
   }
 });
 
 class JobFinder extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: [
+        {
+          id:"d8e025b9-9465-4e95-b951-e65b7294f1c3",
+          title:"hello",
+          url:"https://www.google.com",
+          date: dayjs().format(),
+          liked: true
+        },
+        {
+          id:"5994a83c-64ef-44a1-9f06-968d08d6c3a6",
+          title:"hello",
+          url:"https://www.google.com",
+          date: dayjs().format(),
+          liked: false
+        },
+        {
+          id:"a2eaefcb-3cec-491c-bc90-fc2fe3fc04bc",
+          title:"hello",
+          url:"https://www.google.com",
+          date: dayjs().format(),
+          liked: true
+        },
+        {
+          id:"54dba544-f833-4905-8108-8836228dd9e8",
+          title:"hello",
+          url:"https://www.google.com",
+          date: dayjs().format(),
+          liked: false
+        }
+      ],
+      isLoading:false
+    }
   }
+
+  updateFav(id){
+    this.setState(this.state.data.map(row=>{
+      if(row.id == id){
+        row.liked = !row.liked
+      }
+      return row
+    }))
+  }
+
   render() {
     const { classes } = this.props;
     return (
       <Grid container spacing={3}>
-        <Grid item lg={3} xs={12}>
-        </Grid>
-        <Grid item lg={3} xs={12}>
-          <Paper className={classes.paper}>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione veniam qui reiciendis fuga nihil aut tempore facere mollitia nesciunt dignissimos accusamus consequuntur quod, blanditiis provident perspiciatis minima, eius tenetur similique!</p>
-            <Button variant="contained">Click Me!</Button>
-          </Paper>
-        </Grid>
-        <Grid item lg={3} xs={12}>
-          <Paper className={classes.paper}>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Error illum corporis placeat nemo repellat vero autem quo dolore impedit laboriosam, minima fuga reprehenderit explicabo eos perferendis velit dolor quia sunt?</p>
-          </Paper>
-        </Grid>
-        <Grid item lg={3} xs={12}>
+        <Grid item lg={12} xs={12}>
+          <MaterialTable className={classes.table}
+            title="Job Finder"
+            columns={[
+            {
+                title: 'Title',
+                field: 'title'
+            },
+            {
+                title: 'URL',
+                field: 'url',
+                render: rowData => (<Link href={rowData.url} target="_blank">{rowData.url}</Link>)
+            },
+            {
+                title: 'Posting Date',
+                field: 'date'
+            },
+            {
+                title: 'Like',
+                field: 'liked',
+                render: rowData => (<Fab color="primary" aria-label="add" onClick={e=>this.updateFav(rowData.id)}>{rowData.liked ? <Favorite/> : <FavoriteBorder/>}</Fab>)
+            }]}
+            data={this.state.data}
+            isLoading={this.state.isLoading}
+            options={{
+                search: true,
+                sorting: true,
+                filtering: true,
+                paging: true
+            }}>
+        </MaterialTable>
         </Grid>
       </Grid>
     );
