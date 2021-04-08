@@ -11,3 +11,12 @@ services:
         restart: always
         volumes:
             - ./src:/usr/app/src
+    job-finder-api:
+        build:
+            context: ../job-finder-api
+            dockerfile: Dockerfile
+        ports:
+            - "8080:8080"
+        restart: always
+        volumes:
+            - ../job-finder-api/src:/usr/src
