@@ -26,13 +26,15 @@ class JobFinder extends Component {
         {
           id:"d8e025b9-9465-4e95-b951-e65b7294f1c3",
           title:"hello",
+          seniority:"Entry Level",
           url:"https://www.google.com",
           date: dayjs().format(),
-          liked: true
+          liked: false
         },
         {
           id:"5994a83c-64ef-44a1-9f06-968d08d6c3a6",
           title:"hello",
+          seniority:"Entry Level",
           url:"https://www.google.com",
           date: dayjs().format(),
           liked: false
@@ -40,6 +42,7 @@ class JobFinder extends Component {
         {
           id:"a2eaefcb-3cec-491c-bc90-fc2fe3fc04bc",
           title:"hello",
+          seniority:"Assosiate",
           url:"https://www.google.com",
           date: dayjs().format(),
           liked: true
@@ -47,6 +50,7 @@ class JobFinder extends Component {
         {
           id:"54dba544-f833-4905-8108-8836228dd9e8",
           title:"hello",
+          seniority:"Mid Senior",
           url:"https://www.google.com",
           date: dayjs().format(),
           liked: false
@@ -78,6 +82,10 @@ class JobFinder extends Component {
                 field: 'title'
             },
             {
+              title: 'Seniority',
+              field: 'seniority'
+            },
+            {
                 title: 'URL',
                 field: 'url',
                 render: rowData => (<Link href={rowData.url} target="_blank">{rowData.url}</Link>)
@@ -97,7 +105,9 @@ class JobFinder extends Component {
                 search: true,
                 sorting: true,
                 filtering: true,
-                paging: true
+                paging: true,
+                exportButton: true,
+                selection: true
             }}>
         </MaterialTable>
         </Grid>
