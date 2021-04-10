@@ -1,5 +1,8 @@
   
 version: '3'
+volumes:
+    cloud_database_data:
+      driver: local
 services:
     job-finder:
         build:
@@ -20,3 +23,15 @@ services:
         restart: always
         volumes:
             - ../job-finder-api/src:/usr/src
+    db:    
+        image: postgres
+        volumes:
+            - cloud_database_data:/var/lib/postgresql/data
+            - ../job-finder-api/database/init_scripts:/docker-entrypoint-initdb.d/
+        restart: always
+        environment:
+            - POSTGRES_USER=postgres
+            - POSTGRES_PASSWORD=postgres
+            - POSTGRES_DB=job_finder
+        ports:
+            - "5432:5432"
