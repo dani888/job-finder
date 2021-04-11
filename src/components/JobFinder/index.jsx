@@ -5,6 +5,7 @@ import { Grid, Link, Fab } from '@material-ui/core';
 import { FavoriteBorder, Favorite } from '@material-ui/icons'
 import MaterialTable from 'material-table';
 import dayjs from 'dayjs';
+const axios = require('axios');
 
 const styles = theme => ({
   root: {
@@ -22,51 +23,15 @@ class JobFinder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: [
-        {
-          id:"d8e025b9-9465-4e95-b951-e65b7294f1c3",
-          title:"hello",
-          seniority:"Entry Level",
-          url:"https://www.google.com",
-          date: dayjs().format(),
-          liked: false
-        },
-        {
-          id:"5994a83c-64ef-44a1-9f06-968d08d6c3a6",
-          title:"hello",
-          seniority:"Entry Level",
-          url:"https://www.google.com",
-          date: dayjs().format(),
-          liked: false
-        },
-        {
-          id:"a2eaefcb-3cec-491c-bc90-fc2fe3fc04bc",
-          title:"hello",
-          seniority:"Assosiate",
-          url:"https://www.google.com",
-          date: dayjs().format(),
-          liked: true
-        },
-        {
-          id:"54dba544-f833-4905-8108-8836228dd9e8",
-          title:"hello",
-          seniority:"Mid Senior",
-          url:"https://www.google.com",
-          date: dayjs().format(),
-          liked: false
-        }
-      ],
+      data: [],
       isLoading:false
     }
+    this.init()
   }
 
-  updateFav(id){
-    this.setState(this.state.data.map(row=>{
-      if(row.id == id){
-        row.liked = !row.liked
-      }
-      return row
-    }))
+  async init(){
+    let response = await axios.get('http://localhost:8080/get-jobs')
+    this.setState({data:response.data})
   }
 
   render() {
@@ -92,12 +57,7 @@ class JobFinder extends Component {
             },
             {
                 title: 'Posting Date',
-                field: 'date'
-            },
-            {
-                title: 'Like',
-                field: 'liked',
-                render: rowData => (<Fab color="primary" aria-label="add" onClick={e=>this.updateFav(rowData.id)}>{rowData.liked ? <Favorite/> : <FavoriteBorder/>}</Fab>)
+                field: 'posting_date'
             }]}
             data={this.state.data}
             isLoading={this.state.isLoading}
