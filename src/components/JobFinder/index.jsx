@@ -56,6 +56,10 @@ class JobFinder extends Component {
                 render: rowData => (<Link href={rowData.url} target="_blank">{rowData.url}</Link>)
             },
             {
+                title: 'Location',
+                field: 'location'
+            },
+            {
                 title: 'Posting Date',
                 field: 'posting_date'
             }]}
