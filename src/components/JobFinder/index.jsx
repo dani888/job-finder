@@ -51,6 +51,10 @@ class JobFinder extends Component {
               field: 'seniority'
             },
             {
+              title: 'Employment_Type',
+              field: 'employment_type'
+            },
+            {
                 title: 'URL',
                 field: 'url',
                 render: rowData => (<Link href={rowData.url} target="_blank">{rowData.url}</Link>)
